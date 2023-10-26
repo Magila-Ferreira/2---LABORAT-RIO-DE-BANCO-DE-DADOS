@@ -294,9 +294,66 @@ DELIMITER $$
 -- Exemplo:
 -- CALL reajustarPrecoProduto(10, 1);
 
-/*
-9.  Faça uma rotina para adicionar itens na venda e atualizar os dados necessários no Pedido.
+-- Questão 9
+DELIMITER $$
+CREATE PROCEDURE addItensVenda_atualizaPedido(
+    -- Parâmetros do pedido
+    IN pPED_CODIGO INT,
+    IN pPED_DATA date,
+    IN pPED_VALORINICIAL float,
+    IN pPED_DESCONTO_TOTAL float,
+    IN pPED_VALORFINAL float,
+    IN pPED_COMISSAO_TOTAL float,
+    IN pPED_QNT_PAGAMENTOS INT,
+    IN pFK_FRP_CODIGO INT,
+    IN pFK_VDR_CODIGO INT,
+    IN pFK_CLI_CODIGO INT,
+    IN pFK_STF_CODIGO INT,
+    -- Parâmetros do pedido_prazo
+    IN pFK_PRA_CODIGO INT
+) BEGIN
+    INSERT INTO pedidos (
+        PED_CODIGO,	
+        PED_DATA,	
+        PED_VALORINICIAL,	
+        PED_DESCONTO_TOTAL,	
+        PED_VALORFINAL,	
+        PED_COMISSAO_TOTAL,	
+        PED_QNT_PAGAMENTOS,	
+        FK_FRP_CODIGO,	
+        FK_VDR_CODIGO,	
+        FK_CLI_CODIGO,	
+        FK_STF_CODIGO
+    ) VALUES (
+        pPED_CODIGO,
+        pPED_DATA,
+        pPED_VALORINICIAL,
+        pPED_DESCONTO_TOTAL,
+        pPED_VALORFINAL,
+        pPED_COMISSAO_TOTAL,
+        pPED_QNT_PAGAMENTOS,
+        pFK_FRP_CODIGO,
+        pFK_VDR_CODIGO,
+        pFK_CLI_CODIGO,
+        pFK_STF_CODIGO
+    );
+    INSERT INTO pedidos_prazos (
+        FK_PED_CODIGO,
+        FK_PRA_CODIGO
+    ) VALUES (
+        pPED_CODIGO,
+        pFK_PRA_CODIGO
+    );
+END $$
+DELIMITER $$
 
+-- Exemplo:
+-- CALL addItensVenda_atualizaPedido(
+--  101, '2023-10-26', 200, 20, 180, 20, 5, 3, 2, 3, 1, 5);
+
+-- Questão 10 
+
+/*
 10. Faça uma rotina para que receba como parâmetro o CNPJ do cliente e mostre o número do pedido, a data da compra, a descrição de todos os produtos que o cliente ja comprou na loja; exibir em ordem de cliente e produto.
 
 11. Faça uma rotina para exibir o código e nome de todos os produtos que não foram vendidos nos últimos três meses.
