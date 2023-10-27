@@ -1,0 +1,4 @@
+/* Descrição textual do modelo lógico */
+-- TIPO_PET {tip_codigo, tip_descricao}
+-- PET {pet_codigo, pet_nome, pet_data_nascimento, tip_codigo, pes_cpf}
+-- PESSOA {pes_cpf, pes_nome}

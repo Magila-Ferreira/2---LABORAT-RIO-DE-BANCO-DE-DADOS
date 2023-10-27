@@ -1,8 +1,3 @@
-/* Descrição textual do modelo lógico */
--- TIPO_PET {tip_codigo, tip_descricao}
--- PET {pet_codigo, pet_nome, pet_data_nascimento, tip_codigo, pes_cpf}
--- PESSOA {pes_cpf, pes_nome}
-
 -- Questão 1
 DELIMITER $$ 
 CREATE PROCEDURE inserirProduto(
@@ -54,9 +49,7 @@ insert into produtos(
     );
 END $$ 
 DELIMITER $$ 
-
--- Exemplo: 
--- CALL inserirProduto(6, 111, 'BALA DE MENTA', 'HALLS', 1, 2, '2000-06-17', 23, 30, 5, 'C', 12, 3, 1); 
+-- Executar: CALL inserirProduto(6, 111, 'BALA DE MENTA', 'HALLS', 1, 2, '2000-06-17', 23, 30, 5, 'C', 12, 3, 1); 
 
 DELIMITER $ $ CREATE PROCEDURE inserirCliente(
     IN pCLI_CODIGO int(11),
@@ -101,9 +94,7 @@ INSERT INTO clientes(
     );
 END $$ 
 DELIMITER $$ 
-
--- Exemplo: 
--- CALL inserirCliente(6, 'COMERCIA&', 23994587812, 'comercial@gmail.com', '***', '*****', 45, 63, 1000, 3, 1, 5); 
+-- Executar: CALL inserirCliente(6, 'COMERCIA&', 23994587812, 'comercial@gmail.com', '***', '*****', 45, 63, 1000, 3, 1, 5); 
 
 DELIMITER $$ 
 CREATE PROCEDURE inserirPedido(
@@ -146,9 +137,7 @@ INSERT INTO pedidos (
     );
 END $$ 
 DELIMITER $$ 
-
--- Exemplo: 
--- CALL inserirPedido(951, '1998-03-20', 400, 40, 360, 80.0, 3, 1, 3, 5, 1); 
+-- Executar: CALL inserirPedido(951, '1998-03-20', 400, 40, 360, 80.0, 3, 1, 3, 5, 1); 
 
 DELIMITER $$ 
 CREATE PROCEDURE inserirVendedor(
@@ -156,7 +145,7 @@ CREATE PROCEDURE inserirVendedor(
     IN pVDR_NOME varchar(50),
     IN pVDR_TELEFONE bigint
 ) BEGIN 
-INSERT INTO vendedores (
+    INSERT INTO vendedores (
         VDR_CODIGO,
         VDR_NOME,
         VDR_TELEFONE
@@ -165,12 +154,9 @@ INSERT INTO vendedores (
         pVDR_NOME,
         pVDR_TELEFONE
     );
-
 END $$ 
 DELIMITER $$ 
-
--- Exemplo
--- CALL inserirVendedor(6, 'SILLAS LIMA', 17995621445);
+-- Executar: CALL inserirVendedor(6, 'SILLAS LIMA', 17995621445);
 
 -- Questão 2 */
 DELIMITER $$ 
@@ -178,14 +164,11 @@ CREATE PROCEDURE alterarQntPag_emPedidosFat(IN pPED_QNT_PAGAMENTOS INT) BEGIN
     UPDATE pedidos
     SET PED_QNT_PAGAMENTOS = pPED_QNT_PAGAMENTOS
     WHERE FK_STF_CODIGO = 2;
-END $$ DELIMITER $$ 
-
--- Exemplo:
--- Pedidos FATURADOS
--- CALL alterarQntPag_emPedidosFat(5);
- 
--- Pedidos NÃO faturados
--- CALL alterarQntPag_emPedidoNaoFat(2);
+END $$ 
+DELIMITER $$ 
+-- Executar:
+--> PEDIDOS FATURADOS: CALL alterarQntPag_emPedidosFat(5); 
+--> PEDIDOS NÃO FATURADOS: CALL alterarQntPag_emPedidoNaoFat(2);
 
 DELIMITER $$ 
 CREATE PROCEDURE alterarDadosCliente(IN pCLI_CODIGO INT) BEGIN
@@ -194,9 +177,7 @@ CREATE PROCEDURE alterarDadosCliente(IN pCLI_CODIGO INT) BEGIN
     WHERE CLI_CODIGO = 0;
 END $$ 
 DELIMITER $$ 
-
--- Exemplo:
--- CALL alterarDadosCliente(1);
+-- Executar: CALL alterarDadosCliente(1);
 
 -- Questão 3
 DELIMITER $$ 
@@ -205,9 +186,7 @@ CREATE PROCEDURE excluirDadosCliente(IN pCLI_CODIGO INT) BEGIN
     WHERE CLI_CODIGO > 100
     AND CLI_CODIGO = pCLI_CODIGO;
 END $$ DELIMITER $$ 
-
--- Exemplo:
--- CALL excluirDadosCliente(1);
+-- Executar: CALL excluirDadosCliente(1);
 
 DELIMITER $$ 
 CREATE PROCEDURE excluirDadosProduto(IN pPRO_NOME varchar(50)) BEGIN
@@ -215,12 +194,9 @@ CREATE PROCEDURE excluirDadosProduto(IN pPRO_NOME varchar(50)) BEGIN
     WHERE pPRO_NOME = PRO_NOME;
 END $$ 
 DELIMITER $$ 
-
--- Exemplo:
--- CALL excluirDadosProduto('Chocolate');
+-- Executar: CALL excluirDadosProduto('Chocolate');
 
 -- Questão 4
-
 DELIMITER $$ 
 CREATE PROCEDURE exibirCategoriaProdutoNuncaVendido() BEGIN
     SELECT CTP_DESCRICAO, PRO_NOME
@@ -229,9 +205,7 @@ CREATE PROCEDURE exibirCategoriaProdutoNuncaVendido() BEGIN
     WHERE PRO_ULTIMA_VENDA = '0000-00-00';
 END $$ 
 DELIMITER $$ 
-
--- Exemplo:
--- CALL exibirCategoriaProdutoNuncaVendido();
+-- Executar: CALL exibirCategoriaProdutoNuncaVendido();
 
 -- Questão 5 
 DELIMITER $$ 
@@ -245,9 +219,7 @@ CREATE PROCEDURE exibirProdutoComMaisDeCincoVenda() BEGIN
     HAVING qntPedidosProduto > 5;
 END $$ 
 DELIMITER $$ 
-    
--- Exemplo:
--- CALL exibirProdutoComMaisDeCincoVenda();
+-- Executar: CALL exibirProdutoComMaisDeCincoVenda();
 
 -- Questão 6
 DELIMITER $$
@@ -260,9 +232,7 @@ CREATE PROCEDURE exibirVendedor_porVendas() BEGIN
     ORDER BY somaVendas DESC;
 END $$
 DELIMITER $$;
-
--- Exemplo:
--- CALL exibirVendedor_porVendas();
+-- Executar: CALL exibirVendedor_porVendas();
 
 -- Questão 7
 DELIMITER $$
@@ -274,9 +244,7 @@ DELIMITER $$
     ORDER BY REG_NOME;
 END $$
 DELIMITER $$
-
--- Exemplo:
--- CALL exibirQntVendedores_porRegiao();
+-- Executar: CALL exibirQntVendedores_porRegiao();
 
 -- Questão 8
 DELIMITER $$
@@ -284,15 +252,13 @@ CREATE PROCEDURE reajustarPrecoProduto(IN pReajuste float, IN pPRO_CODIGO INT) B
     UPDATE produtos
     SET PRO_PRECO199 = (PRO_PRECO199 * ((pReajuste/100) + 1));
     WHERE PRO_CODIGO = pPRO_CODIGO;
-
+    
     UPDATE produtos
     SET PRO_PRECOMERCADO = (PRO_PRECOMERCADO * ((pReajuste/100) + 1)) 
     WHERE PRO_CODIGO = pPRO_CODIGO; 
 END $$
 DELIMITER $$
-
--- Exemplo:
--- CALL reajustarPrecoProduto(10, 1);
+-- Executar: CALL reajustarPrecoProduto(10, 1);
 
 -- Questão 9
 DELIMITER $$
@@ -346,19 +312,41 @@ CREATE PROCEDURE addItensVenda_atualizaPedido(
     );
 END $$
 DELIMITER $$
-
--- Exemplo:
--- CALL addItensVenda_atualizaPedido(
---  101, '2023-10-26', 200, 20, 180, 20, 5, 3, 2, 3, 1, 5);
+-- Exemplo: CALL addItensVenda_atualizaPedido(101, '2023-10-26', 200, 20, 180, 20, 5, 3, 2, 3, 1, 5);
 
 -- Questão 10 
+DELIMITER $$
+CREATE PROCEDURE exibirCompras_doCliente(IN pCLI_CNPJ INT) BEGIN
+    SELECT CLI_NOME, PED_PRO_PRODUTO, PED_CODIGO, PED_DATA, PED_PRO_QUANTIDADE,PED_PRO_PRECO_UNITARIO, PED_PRO_PRECOxQUANT, CLI_NOME 
+    FROM pedidos
+    JOIN clientes
+    ON CLI_CODIGO = FK_CLI_CODIGO
+    JOIN pedidos_produtos
+    ON PED_CODIGO = FK_PED_CODIGO
+    WHERE CLI_CNPJ = pCLI_CNPJ
+    ORDER BY CLI_CODIGO, FK_PRO_CODIGO;     
+END $$
+DELIMITER $$
+-- Exemplo: CALL exibirCompras_doCliente(10);
 
-/*
-10. Faça uma rotina para que receba como parâmetro o CNPJ do cliente e mostre o número do pedido, a data da compra, a descrição de todos os produtos que o cliente ja comprou na loja; exibir em ordem de cliente e produto.
+-- Questão 11
+DELIMITER $$
+CREATE PROCEDURE produtosNaoVendidos_noTrimestre() BEGIN
+    SELECT PRO_CODIGO, PRO_NOME FROM produtos
+    WHERE PRO_CODIGO NOT IN(SELECT FK_PRO_CODIGO FROM pedidos_produtos
+    JOIN pedidos
+    ON PED_CODIGO = FK_PED_CODIGO  
+    AND PED_DATA > '2023-07-31');
+END $$
+DELIMITER $$
+-- Executar: CALL produtosNaoVendidos_noTrimestre();
 
-11. Faça uma rotina para exibir o código e nome de todos os produtos que não foram vendidos nos últimos três meses.
-
-12. Faça uma rotina para exibir a quantidade de clientes que utilizaram cada forma de pagamento forma.
-
-*/
--- Fazer tabela de Log. Procedure???
+-- Questão 12
+DELIMITER $$
+CREATE PROCEDURE exibirQntClientes_porFormaPagamento() BEGIN
+    SELECT FK_FRP_CODIGO AS 'Forma_Pagamento', COUNT(DISTINCT(FK_CLI_CODIGO)) AS 'Qnt_Clientes'
+    FROM pedidos
+    GROUP BY FK_FRP_CODIGO;
+END $$
+DELIMITER $$
+-- Executar: CALL exibirQntClientes_porFormaPagamento();
